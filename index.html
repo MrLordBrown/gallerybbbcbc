@@ -1,0 +1,719 @@
+<!DOCTYPE html>
+<!-- Design by foolishdeveloper.com-->
+<html lang="en">
+<head>
+  <title>filterable gallery</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style media="screen">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lacquer&display=swap" rel="stylesheet">
+
+body{
+  line-height: 1.5;
+    background-color: azure;   
+}
+*{
+    padding: 0;
+  margin:0;
+  box-sizing: border-box;
+}
+.container{
+  max-width: 1170px;
+  margin:auto;
+}
+.row{
+  display: flex;
+  flex-wrap: wrap;
+}
+img{
+  max-width: 100%;
+  vertical-align: middle;
+}
+
+      .caption {
+          display: block;
+          opacity: 0;
+          z-index: 100;
+          width: 100%;
+          height: 100%;
+         position: absolute;
+        font-family: 'Lacquer', serif;
+      }
+      
+      .caption:hover {
+          opacity: 1;
+           font-family: 'Lacquer', serif;
+      }
+      
+/*.gallery*/
+.gallery{
+  width: 100vw;
+  display: block;
+  min-height: 100vh;
+  background-color: #2a2932;
+  padding: 10vw 0;
+}
+.gallery .gallery-filter{
+  padding: 1vw;
+  width: 100%;
+  text-align: center;
+  margin-bottom: 40px;
+}
+.gallery .gallery-filter .filter-item{
+    float: left;
+  color: #ffffff;
+  font-size: 1vh;
+  border: 2px solid white;
+  text-transform: uppercase;
+  border-radius: 20px;
+  margin: 1vw;
+  cursor: pointer;
+  padding: 1vh;
+  line-height: 2vh;
+  transition: all 0.3s ease;
+}
+.gallery .gallery-filter .filter-item.active{
+  color: white;
+  border-color : #16b5ef;
+  background: #16b5ef;
+}
+.gallery .gallery-item{
+  width: calc(100% / 4);
+  padding: 1vw;
+
+}
+      #aboutUs {
+          font-family: monospace;
+          padding: 2vw;
+          margin: 1vh;
+          font-size: 2vh;
+          border: 2px black solid;
+          border-radius: 50%
+              text-align: center;
+      }
+      
+      .gallery-item:hover {
+          border: 2px red solid;
+          border-radius: 20px;
+      }
+.gallery .gallery-item-inner img{
+  width: 100%;
+  border: 3px solid #d4dad9;
+}
+.gallery .gallery-item.show{
+  animation: fadeIn 0.5s ease;
+}
+@keyframes fadeIn{
+  0%{
+    opacity: 0;
+  }
+  100%{
+    opacity: 1;
+  }
+}
+.gallery .gallery-item.hide{
+  display: none;
+}
+
+/*responsive*/
+@media(max-width: 491px){
+  .gallery .gallery-item{
+    width: 50%;
+  }
+}
+@media(max-width: 467px){
+    .gallery .gallery-item{
+    width: 100%;
+  }
+  .gallery .gallery-filter .filter-item{
+    margin-bottom: 2vh;
+  }
+}
+      h1 {
+          font-family: monospace;
+          font-size: 5vh;
+          margin-top: 1vh;
+          text-align: center;
+      }
+  </style>
+</head>
+<body>
+    <h1> Build a Building Block City Builders Club</h1>
+     <div id="aboutUs">The Build a Building Block City Builders Club (BBBCBC) is a club that constructs buildings out of
+      building blocks. Beyond, there is much more. A coalition of the creative spirit. A melding of the engineering
+      mind. Exploration of the unknown and the once-thought-known.
+      Those who share in the BBBCBC experience learn about urban planning, architecture, sustainability, and much more.
+      They learn about their own potential for creative thought and the limitless opportunities found in a handful of
+      blocks.
+      The following represents a year's collection of weekly building models, competition winners, and some spurious
+      designs. Over 70 learners have joined the club and contributed to the growth of the BBBCBC's Neverending City.
+      Thank you to all who have helped this city grow and to all those who shall do so in the future.</div>
+
+<section class="gallery">
+    <div id="thumbnails" class="row"></div>
+</section>
+
+<script>
+
+
+ const filterContainer = document.querySelector(".gallery-filter"),
+ galleryItems = document.querySelectorAll(".gallery-item");
+
+ filterContainer.addEventListener("click", (event) =>{
+   if(event.target.classList.contains("filter-item")){
+     // deactivate existing active 'filter-item'
+     filterContainer.querySelector(".active").classList.remove("active");
+     // activate new 'filter-item'
+     event.target.classList.add("active");
+     const filterValue = event.target.getAttribute("data-filter");
+     galleryItems.forEach((item) =>{
+       if(item.classList.contains(filterValue) || filterValue === 'all'){
+        item.classList.remove("hide");
+         item.classList.add("show");
+       }
+       else{
+        item.classList.remove("show");
+        item.classList.add("hide");
+       }
+     });
+   }
+ });
+</script>
+    <script>
+        
+        var appDiv = document.getElementById('thumbnails');
+
+var data = [
+  {
+    BuildingName: 'Hawaiian Bamboo Apartments',
+    Block: 'Central City',
+    Week: 1,
+    Image: 1,
+  },
+  {
+    BuildingName: 'One Flame Hotel',
+    Block: 'Central City',
+    Week: 2,
+    Image: 2,
+  },
+  {
+    BuildingName: "Mayor's House",
+    Block: 'Central City',
+    Week: 3,
+    Image: 3,
+  },
+  {
+    BuildingName: 'Event Center',
+    Block: 'Central City',
+    Week: 4,
+    Image: 4,
+  },
+  {
+    BuildingName: 'City Hall',
+    Block: 'Central City',
+    Week: 5,
+    Image: 5,
+  },
+  {
+    BuildingName: 'Hill Valley Clock Tower',
+    Block: "80's Block",
+    Week: 7,
+    Image: 6,
+  },
+  {
+    BuildingName: 'Villa Savoye',
+    Block: 'Amazing Homes',
+    Week: 11,
+    Image: 7,
+  },
+  {
+    BuildingName: 'Eames House',
+    Block: 'Amazing Homes',
+    Week: 11,
+    Image: 8,
+  },
+  {
+    BuildingName: 'Villa Ronconci',
+    Block: 'Amazing Homes',
+    Week: 12,
+    Image: 9,
+  },
+  {
+    BuildingName: 'Falling Water',
+    Block: 'Amazing Homes',
+    Week: 13,
+    Image: 10,
+  },
+  {
+    BuildingName: 'Casa Barragan',
+    Block: 'Amazing Homes',
+    Week: 14,
+    Image: 11,
+  },
+  {
+    BuildingName: 'Heydar Aliyev Center',
+    Block: 'Future of Architecture',
+    Week: 16,
+    Image: 12,
+  },
+  {
+    BuildingName: 'Mars-ONE Habitat Module',
+    Block: 'Future of Architecture',
+    Week: 18,
+    Image: 13,
+  },
+  {
+    BuildingName: 'Form & Nature',
+    Block: 'Future of Architecture',
+    Week: 19,
+    Image: 14,
+  },
+  {
+    BuildingName: 'Natural History Museum',
+    Block: 'Future of Architecture',
+    Week: 20,
+    Image: 15,
+  },
+  {
+    BuildingName: 'Library Tower & Wilshire Grand Hotel',
+    Block: 'Los Angeles Skyline',
+    Week: 21,
+    Image: 16,
+  },
+  {
+    BuildingName: 'Panorama Tower & Four Seasons Miami',
+    Block: 'Miami Skyline',
+    Week: 25,
+    Image: 17,
+  },
+  {
+    BuildingName: 'Space Mountain',
+    Block: 'Magic Kingdom',
+    Week: 29,
+    Image: 18,
+  },
+  {
+    BuildingName: 'Millenium Falcon',
+    Block: 'Magic Kingdom',
+    Week: 31,
+    Image: 19,
+  },
+  {
+    BuildingName: 'Grass Block',
+    Block: 'Minecraft',
+    Week: 32,
+    Image: 20,
+  },
+  {
+    BuildingName: 'Obsidian Block',
+    Block: 'Minecraft',
+    Week: 32,
+    Image: 21,
+  },
+  {
+    BuildingName: 'Maitland House',
+    Block: "80's Block",
+    Week: 6,
+    Image: 22,
+  },
+  {
+    BuildingName: 'Temple of Doom',
+    Block: "80's Block",
+    Week: 9,
+    Image: 23,
+  },
+  {
+    BuildingName: '555 CPW',
+    Block: "80's Block",
+    Week: 8,
+    Image: 24,
+  },
+  {
+    BuildingName: 'Castle of Lions',
+    Block: "80's Block",
+    Week: 10,
+    Image: 25,
+  },
+  {
+    BuildingName: 'Death Star',
+    Block: "80's Block",
+    Week: 14,
+    Image: 26,
+  },
+  {
+    BuildingName: 'Oudhof',
+    Block: 'Amazing Homes',
+    Week: 15,
+    Image: 27,
+  },
+  {
+    BuildingName: 'Skypad Apartments',
+    Block: 'Future of Architecture',
+    Week: 17,
+    Image: 28,
+  },
+  {
+    BuildingName: 'Columbia Business Center & Space Needle',
+    Block: 'Seattle Skyline',
+    Week: 22,
+    Image: 29,
+  },
+  {
+    BuildingName: 'Namsan Tower & Lotte World Building',
+    Block: 'Seoul Skyline',
+    Week: 23,
+    Image: 30,
+  },
+  {
+    BuildingName: 'Ping An Financial Building & K100 Building',
+    Block: 'Shenzhen Skyline',
+    Week: 24,
+    Image: 31,
+  },
+  {
+    BuildingName: 'Benjamin Tower',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 32,
+  },
+  {
+    BuildingName: 'Scale',
+    Block: 'Architecture Review',
+    Week: 33,
+    Image: 33,
+  },
+  {
+    BuildingName: 'Liam Tower',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 34,
+  },
+  {
+    BuildingName: 'Jailhouse Sam',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 35,
+  },
+  {
+    BuildingName: 'Appartamento di Miekele',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 36,
+  },
+  {
+    BuildingName: 'Luka Wizards Co.',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 37,
+  },
+  {
+    BuildingName: "Luke's Cathedral",
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 38,
+  },
+  {
+    BuildingName: 'Lee Business Center',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 39,
+  },
+  {
+    BuildingName: 'Pagadoa Matthew',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 40,
+  },
+  {
+    BuildingName: 'Seuessenstraus Boingenhoppeturm',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 41,
+  },
+  {
+    BuildingName: 'Haunted Mansion',
+    Block: 'Magic Kingdom',
+    Week: 27,
+    Image: 42,
+  },
+  {
+    BuildingName: 'Temple of the Forbidden Eye',
+    Block: 'Magic Kingdom',
+    Week: 28,
+    Image: 43,
+  },
+  {
+    BuildingName: 'Penny Nature Castle',
+    Block: 'North River Skyline',
+    Week: 26,
+    Image: 44,
+  },
+  {
+    BuildingName: 'Toontown Town Hall',
+    Block: 'Magic Kingdom',
+    Week: 30,
+    Image: 45,
+  },
+  {
+    BuildingName: 'Space & Section',
+    Block: 'Architecture Review',
+    Week: 34,
+    Image: 46,
+  },
+  {
+    BuildingName: "Sleeping Beauty's Castle",
+    Block: 'Magic Kingdom',
+    Week: 32,
+    Image: 47,
+  },
+  {
+    BuildingName: "Drafter's Stadium",
+    Block: 'South River District',
+    Week: 49,
+    Image: 48,
+  },
+  {
+    BuildingName: 'Nakayama Arcology',
+    Block: 'South River District',
+    Week: 48,
+    Image: 49,
+  },
+  {
+    BuildingName: 'News Print Office Building',
+    Block: 'South River District',
+    Week: 47,
+    Image: 50,
+  },
+  {
+    BuildingName: 'Grand Staircase',
+    Block: 'Harry Potter',
+    Week: 46,
+    Image: 62,
+  },
+  {
+    BuildingName: 'The Burrow',
+    Block: 'Harry Potter',
+    Week: 44,
+    Image: 52,
+  },
+  {
+    BuildingName: 'Entrance Hall',
+    Block: 'Harry Potter',
+    Week: 45,
+    Image: 53,
+  },
+  {
+    BuildingName: 'Azkaban',
+    Block: 'Harry Potter',
+    Week: 45,
+    Image: 54,
+  },
+  {
+    BuildingName: 'Port: Rail Transport',
+    Block: 'Logistics',
+    Week: 41,
+    Image: 55,
+  },
+  {
+    BuildingName: 'Warehousing',
+    Block: 'Logistics',
+    Week: 43,
+    Image: 56,
+  },
+  {
+    BuildingName: 'Air Freight',
+    Block: 'Logistics',
+    Week: 42,
+    Image: 57,
+  },
+  {
+    BuildingName: 'Port: Sea Cargo',
+    Block: 'Logistics',
+    Week: 40,
+    Image: 58,
+  },
+  {
+    BuildingName: 'Surfaces',
+    Block: 'Architecture Review',
+    Week: 36,
+    Image: 59,
+  },
+  {
+    BuildingName: 'Modules & Repetition',
+    Block: 'Architecture Review',
+    Week: 35,
+    Image: 0,
+  },
+  {
+    BuildingName: 'Mass & Density',
+    Block: 'Architecture Review',
+    Week: 37,
+    Image: 0,
+  },
+  {
+    BuildingName: 'Symmetry',
+    Block: 'Architecture Review',
+    Week: 38,
+    Image: 0,
+  },
+  {
+    BuildingName: 'Modular Arboretum',
+    Block: 'Architecture Review',
+    Week: 39,
+    Image: 65,
+  },
+  {
+    BuildingName: 'Main Hall',
+    Block: 'Harry Potter',
+    Week: 46,
+    Image: 51,
+  },
+  {
+    BuildingName: 'South River Tesla Coil',
+    Block: 'South River District',
+    Week: 50,
+    Image: 60,
+  },
+  {
+    BuildingName: '5 South  River',
+    Block: 'South River District',
+    Week: 51,
+    Image: 61,
+  },
+  {
+    BuildingName: 'City Convention Center',
+    Block: 'South River District',
+    Week: 52,
+    Image: 68,
+  },
+  {
+    BuildingName: 'Tokyo Imperial Palace Gardens',
+    Block: 'South River Gardens',
+    Week: 54,
+    Image: 64,
+  },
+  {
+    BuildingName: 'Antigravity Gardens',
+    Block: 'South River Gardens',
+    Week: 53,
+    Image: 0,
+  },
+  {
+    BuildingName: 'Tokyo Imperial Palace',
+    Block: 'South River District',
+    Week: 54,
+    Image: 66,
+  },
+  {
+    BuildingName: 'White Sands National Park Visitor Center',
+    Block: 'South River District',
+    Week: 55,
+    Image: 69,
+  },
+  {
+    BuildingName: 'Central Park',
+    Block: 'South River District',
+    Week: 56,
+    Image: 70,
+  },
+  {
+    BuildingName: 'Downtown East Station',
+    Block: 'Magic Kingdom',
+    Week: 58,
+    Image: 72,
+  },
+  {
+    BuildingName: 'City South Station',
+    Block: 'South River District',
+    Week: 59,
+    Image: 73,
+  },
+
+  {
+    BuildingName: 'CTA Transit Hub',
+    Block: 'City West',
+    Week: 60,
+    Image: 0,
+  },
+
+  {
+    BuildingName: 'City Hospital',
+    Block: 'City East',
+    Week: 62,
+    Image: 76,
+  },
+  {
+    BuildingName: 'City Monorail',
+    Block: 'Monorail Transit System',
+    Week: 57,
+    Image: 71,
+  },
+
+  {
+    BuildingName: 'City Fire Station',
+    Block: 'South River District',
+    Week: 63,
+    Image: 77,
+  },
+  {
+    BuildingName: 'City Police Station',
+    Block: 'South River District',
+    Week: 64,
+    Image: 0,
+  },
+  {
+    BuildingName: 'City Library',
+    Block: 'South River District',
+    Week: 65,
+    Image: 0,
+  },
+];
+
+var count = Object.keys(data).length;
+
+function city() {
+   
+  // browser code
+    for (var i = 1; i < count; i++) {
+        var image = data[i - 1].Image;
+        var inst = data[i - 1].Week;
+        var block = data[i-1].Block;
+        var blocky = block.replace(/\s/g, '');
+
+        var container = document.createElement('div');
+        var clazz = document.createAttribute('class');
+        clazz.value = 'gallery-item ' + blocky;
+        container.setAttributeNode(clazz);
+    
+        var inner = document.createElement('div');
+        inz = document.createAttribute('class');
+        inz.value = 'gallery-item-inner';
+        inner.setAttributeNode(inz);
+    
+        var imgs = document.createElement('img');
+        var srcs = document.createAttribute('src');
+        imgs.setAttributeNode(srcs);
+        srcs.value =
+      'https://raw.githubusercontent.com/MrLordBrown/bcbc/main/s (' +
+      image +
+      ').png';
+        
+        var caption = document.createElement('div');
+        var hidez = document.createAttribute('class');
+        hidez.value = 'caption';
+        caption.setAttributeNode(hidez);
+        caption.innerHTML = data[i - 1].BuildingName;
+        
+        inner.appendChild(caption);
+        inner.appendChild(imgs);
+        container.appendChild(inner);
+        appDiv.appendChild(container);
+        
+    }
+}
+        city();
+    </script>
+</body>
+</html>
